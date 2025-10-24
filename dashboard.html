@@ -1,0 +1,1093 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Neuralink - Professional Trading Platform</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        /* Professional Trading Platform Colors */
+        :root {
+            --primary: #F0B90B;
+            --primary-dark: #D4A30A;
+            --primary-light: #F7D35A;
+            --secondary: #00D2FF;
+            --accent: #00FF88;
+            
+            --bg-primary: #0A0E17;
+            --bg-secondary: #131B29;
+            --bg-tertiary: #1A2234;
+            --bg-card: #161F30;
+            
+            --text-primary: #FFFFFF;
+            --text-secondary: #94A3B8;
+            --text-tertiary: #64748B;
+            
+            --green: #00FF88;
+            --red: #FF4747;
+            --yellow: #F0B90B;
+            
+            --border: #2D3748;
+            --border-light: #374151;
+            --shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+            
+            --spacing-xs: 8px;
+            --spacing-sm: 12px;
+            --spacing-md: 16px;
+            --spacing-lg: 20px;
+            --spacing-xl: 24px;
+            
+            --radius-sm: 4px;
+            --radius-md: 6px;
+            --radius-lg: 8px;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+        }
+
+        body {
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            min-height: 100vh;
+            line-height: 1.5;
+            overflow-x: hidden;
+            padding-bottom: 60px;
+        }
+
+        /* User Profile Section */
+        .user-profile {
+            background: var(--bg-secondary);
+            padding: var(--spacing-md);
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-md);
+            border-bottom: 1px solid var(--border);
+        }
+
+        .user-avatar {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+            color: white;
+            font-weight: bold;
+        }
+
+        .user-info {
+            flex: 1;
+        }
+
+        .user-email {
+            font-size: 16px;
+            font-weight: 600;
+            margin-bottom: 4px;
+        }
+
+        .user-id {
+            font-size: 12px;
+            color: var(--text-secondary);
+        }
+
+        /* Top Banner */
+        .top-banner {
+            background: linear-gradient(90deg, #FFD700, #F0B90B, #FFD700);
+            color: #000;
+            padding: var(--spacing-sm) 0;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .banner-scroll {
+            display: flex;
+            animation: scrollBanner 25s linear infinite;
+            white-space: nowrap;
+        }
+
+        .banner-item {
+            padding: 0 var(--spacing-xl);
+            font-weight: 700;
+            font-size: 14px;
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-sm);
+        }
+
+        .banner-icon {
+            font-size: 16px;
+        }
+
+        @keyframes scrollBanner {
+            0% { transform: translateX(100%); }
+            100% { transform: translateX(-100%); }
+        }
+
+        /* Main Navigation */
+        .main-nav {
+            background: var(--bg-secondary);
+            padding: var(--spacing-md);
+            display: flex;
+            justify-content: space-around;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .nav-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 4px;
+            color: var(--text-secondary);
+            font-size: 12px;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .nav-item.active {
+            color: var(--primary);
+        }
+
+        .nav-icon {
+            font-size: 20px;
+            margin-bottom: 2px;
+        }
+
+        /* Main Content Grid */
+        .content-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: var(--spacing-md);
+            padding: var(--spacing-md);
+            max-width: 500px;
+            margin: 0 auto;
+        }
+
+        /* Feature Cards */
+        .feature-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-lg);
+            padding: var(--spacing-lg);
+            text-align: center;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .feature-card:hover {
+            border-color: var(--primary);
+            transform: translateY(-2px);
+        }
+
+        .feature-icon {
+            width: 50px;
+            height: 50px;
+            background: var(--bg-secondary);
+            border-radius: var(--radius-md);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto var(--spacing-sm);
+            font-size: 24px;
+            color: var(--primary);
+        }
+
+        .feature-title {
+            font-size: 16px;
+            font-weight: 600;
+            margin-bottom: var(--spacing-xs);
+            color: var(--text-primary);
+        }
+
+        .feature-subtitle {
+            font-size: 12px;
+            color: var(--text-secondary);
+        }
+
+        /* Prize Wheel Section */
+        .prize-section {
+            grid-column: 1 / -1;
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-lg);
+            padding: var(--spacing-lg);
+            text-align: center;
+            margin-top: var(--spacing-md);
+        }
+
+        .prize-title {
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: var(--spacing-md);
+            color: var(--primary);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: var(--spacing-sm);
+        }
+
+        .prize-wheel {
+            width: 120px;
+            height: 120px;
+            background: conic-gradient(
+                from 0deg,
+                #FF6B6B, #4ECDC4, #45B7D1, #96CEB4, 
+                #FFEAA7, #DDA0DD, #98D8C8, #F7DC6F
+            );
+            border-radius: 50%;
+            margin: 0 auto var(--spacing-md);
+            position: relative;
+            animation: rotateWheel 15s linear infinite;
+        }
+
+        .wheel-center {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 30px;
+            height: 30px;
+            background: var(--bg-primary);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 16px;
+            color: var(--primary);
+        }
+
+        @keyframes rotateWheel {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        /* Live Wins Section */
+        .wins-section {
+            grid-column: 1 / -1;
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-lg);
+            padding: var(--spacing-md);
+            margin-top: var(--spacing-md);
+            height: 120px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .wins-title {
+            font-size: 14px;
+            font-weight: 600;
+            margin-bottom: var(--spacing-sm);
+            color: var(--text-primary);
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-sm);
+        }
+
+        .wins-scroll {
+            animation: scrollWins 15s linear infinite;
+        }
+
+        .win-item {
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-sm);
+            padding: var(--spacing-sm) 0;
+            font-size: 13px;
+        }
+
+        .win-avatar {
+            width: 24px;
+            height: 24px;
+            background: var(--bg-secondary);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+            color: var(--text-secondary);
+        }
+
+        .win-user {
+            color: var(--text-secondary);
+        }
+
+        .win-amount {
+            color: var(--green);
+            font-weight: 600;
+        }
+
+        @keyframes scrollWins {
+            0% { transform: translateY(100%); }
+            100% { transform: translateY(-100%); }
+        }
+
+        /* Market Section */
+        .market-section {
+            grid-column: 1 / -1;
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-lg);
+            padding: var(--spacing-md);
+            margin-top: var(--spacing-md);
+        }
+
+        .market-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: var(--spacing-md);
+        }
+
+        .market-title {
+            font-size: 16px;
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+
+        .chart-container {
+            position: relative;
+            height: 200px;
+            margin-bottom: var(--spacing-md);
+        }
+
+        .market-list {
+            display: flex;
+            flex-direction: column;
+            gap: var(--spacing-md);
+        }
+
+        .market-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: var(--spacing-sm);
+            background: var(--bg-secondary);
+            border-radius: var(--radius-md);
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .market-item:hover {
+            background: var(--bg-tertiary);
+        }
+
+        .market-info {
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-sm);
+        }
+
+        .market-icon {
+            width: 32px;
+            height: 32px;
+            background: var(--bg-tertiary);
+            border-radius: var(--radius-sm);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 16px;
+        }
+
+        .market-details {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .market-name {
+            font-weight: 600;
+            font-size: 14px;
+        }
+
+        .market-price {
+            font-size: 16px;
+            font-weight: 700;
+        }
+
+        .market-change {
+            font-size: 12px;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .change-positive {
+            color: var(--green);
+        }
+
+        .change-negative {
+            color: var(--red);
+        }
+
+        /* Bottom Navigation */
+        .bottom-nav {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: var(--bg-secondary);
+            border-top: 1px solid var(--border);
+            display: flex;
+            justify-content: space-around;
+            padding: var(--spacing-sm) 0;
+            z-index: 100;
+        }
+
+        .bottom-nav-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 4px;
+            color: var(--text-secondary);
+            font-size: 10px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            padding: var(--spacing-xs);
+        }
+
+        .bottom-nav-item.active {
+            color: var(--primary);
+        }
+
+        .bottom-nav-icon {
+            font-size: 18px;
+        }
+
+        /* Floating Action Buttons */
+        .floating-actions {
+            position: fixed;
+            right: var(--spacing-md);
+            top: 50%;
+            transform: translateY(-50%);
+            display: flex;
+            flex-direction: column;
+            gap: var(--spacing-sm);
+            z-index: 99;
+        }
+
+        .floating-btn {
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 18px;
+            text-decoration: none;
+            box-shadow: var(--shadow);
+            transition: all 0.3s ease;
+        }
+
+        .floating-btn.whatsapp {
+            background: linear-gradient(135deg, #25D366, #128C7E);
+        }
+
+        .floating-btn.telegram {
+            background: linear-gradient(135deg, #0088CC, #006699);
+        }
+
+        .floating-btn:hover {
+            transform: scale(1.1);
+        }
+
+        /* Responsive Design */
+        @media (max-width: 480px) {
+            .content-grid {
+                grid-template-columns: 1fr 1fr;
+                gap: var(--spacing-sm);
+                padding: var(--spacing-sm);
+            }
+            
+            .feature-card {
+                padding: var(--spacing-md);
+            }
+            
+            .feature-icon {
+                width: 40px;
+                height: 40px;
+                font-size: 20px;
+            }
+            
+            .feature-title {
+                font-size: 14px;
+            }
+            
+            .prize-wheel {
+                width: 100px;
+                height: 100px;
+            }
+            
+            .floating-actions {
+                right: var(--spacing-sm);
+            }
+            
+            .floating-btn {
+                width: 40px;
+                height: 40px;
+                font-size: 16px;
+            }
+            
+            .chart-container {
+                height: 150px;
+            }
+        }
+
+        /* Focus Styles */
+        button:focus-visible {
+            outline: 2px solid var(--primary);
+            outline-offset: 2px;
+        }
+    </style>
+</head>
+<body>
+    <!-- User Profile Section -->
+    <div class="user-profile">
+        <div class="user-avatar" id="userAvatar">PW</div>
+        <div class="user-info">
+            <div class="user-email" id="userEmail">user****@gmail.com</div>
+            <div class="user-id" id="userId">ID: Loading...</div>
+        </div>
+    </div>
+
+    <!-- Top Banner -->
+    <div class="top-banner">
+        <div class="banner-scroll">
+            <div class="banner-item">
+                <span class="banner-icon">⚡</span>
+                Master Neuralink- Make Money in Real Time
+            </div>
+            <div class="banner-item">
+                <span class="banner-icon">💰</span>
+                Let's Make Money Because We Can Do It
+            </div>
+            <div class="banner-item">
+                <span class="banner-icon">📈</span>
+                Trade in Real Time and Make Money
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Navigation -->
+    <nav class="main-nav">
+        <div class="nav-item active" data-page="home">
+            <i class="fas fa-home nav-icon"></i>
+            <span>Home</span>
+        </div>
+        <div class="nav-item" data-page="transaction">
+            <i class="fas fa-exchange-alt nav-icon"></i>
+            <span>Transaction</span>
+        </div>
+        <div class="nav-item" data-page="my-team">
+            <i class="fas fa-users nav-icon"></i>
+            <span>My Team</span>
+        </div>
+        <div class="nav-item" data-page="help">
+            <i class="fas fa-question-circle nav-icon"></i>
+            <span>Help</span>
+        </div>
+    <div class="nav-item" data-page="mine">
+            <i class="fas fa-user nav-icon"></i>
+            <span>Mine</span>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <div class="content-grid">
+        <!-- Feature Cards -->
+        <div class="feature-card" data-feature="btc-usdt">
+            <div class="feature-icon">
+                <i class="fab fa-btc"></i>
+            </div>
+            <div class="feature-title">BTC/USDT</div>
+            <div class="feature-subtitle">Trade Bitcoin</div>
+        </div>
+
+        <div class="feature-card" data-feature="wingo">
+            <div class="feature-icon">
+                <i class="fas fa-bolt"></i>
+            </div>
+            <div class="feature-title">WIN GO</div>
+            <div class="feature-subtitle">Fast Trading</div>
+        </div>
+
+        <div class="feature-card" data-feature="simulate">
+            <div class="feature-icon">
+                <i class="fas fa-gamepad"></i>
+            </div>
+            <div class="feature-title">Simulate</div>
+            <div class="feature-subtitle">Practice Mode</div>
+        </div>
+
+        <div class="feature-card" data-feature="mining">
+            <div class="feature-icon">
+                <i class="fas fa-hard-hat"></i>
+            </div>
+            <div class="feature-title">Daily Mining</div>
+            <div class="feature-subtitle">Earn Rewards</div>
+        </div>
+
+        <!-- Prize Wheel Section -->
+        <div class="prize-section" data-feature="prize-wheel">
+            <div class="prize-title">
+                <i class="fas fa-gift"></i>
+                Prize Wheel
+            </div>
+            <div class="prize-wheel">
+                <div class="wheel-center">
+                    <i class="fas fa-gift"></i>
+                </div>
+            </div>
+        </div>
+
+        <!-- Live Wins Section -->
+        <div class="wins-section">
+            <div class="wins-title">
+                <i class="fas fa-trophy"></i>
+                Recent Winners
+            </div>
+            <div class="wins-scroll">
+                <div class="win-item">
+                    <div class="win-avatar">
+                        <i class="fas fa-user"></i>
+                    </div>
+                    <div class="win-content">
+                        <span class="win-user">1080****99</span> won <span class="win-amount">113.2 TRX</span>
+                    </div>
+                </div>
+                <div class="win-item">
+                    <div class="win-avatar">
+                        <i class="fas fa-user"></i>
+                    </div>
+                    <div class="win-content">
+                        <span class="win-user">256*******00</span> won <span class="win-amount">300 USDT</span>
+                    </div>
+                </div>
+                <div class="win-item">
+                    <div class="win-avatar">
+                        <i class="fas fa-user"></i>
+                    </div>
+                    <div class="win-content">
+                        <span class="win-user">de*******@gmail.com</span> won <span class="win-amount">800 TRX</span>
+                    </div>
+                </div>
+                <div class="win-item">
+                    <div class="win-avatar">
+                        <i class="fas fa-user"></i>
+                    </div>
+                    <div class="win-content">
+                        <span class="win-user">user_****89</span> won <span class="win-amount">150 USDT</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Market Section -->
+        <div class="market-section">
+            <div class="market-header">
+                <div class="market-title">Live Market</div>
+            </div>
+            <div class="chart-container">
+                <canvas id="priceChart"></canvas>
+            </div>
+            <div class="market-list">
+                <div class="market-item" data-market="btc-usdt">
+                    <div class="market-info">
+                        <div class="market-icon">
+                            <i class="fab fa-btc"></i>
+                        </div>
+                        <div class="market-details">
+                            <div class="market-name">BTC/USDT</div>
+                            <div class="market-price" id="btcPrice">68,421.50</div>
+                        </div>
+                    </div>
+                    <div class="market-change change-positive" id="btcChange">
+                        <i class="fas fa-arrow-up"></i>
+                        2.34%
+                    </div>
+                </div>
+                <div class="market-item" data-market="eth-usdt">
+                    <div class="market-info">
+                        <div class="market-icon">
+                            <i class="fab fa-ethereum"></i>
+                        </div>
+                        <div class="market-details">
+                            <div class="market-name">ETH/USDT</div>
+                            <div class="market-price" id="ethPrice">4,061.25</div>
+                        </div>
+                    </div>
+                    <div class="market-change change-negative" id="ethChange">
+                        <i class="fas fa-arrow-down"></i>
+                        1.06%
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Floating Action Buttons -->
+    <div class="floating-actions">
+        <a href="https://wa.me/+250785841077" class="floating-btn whatsapp" target="_blank">
+            <i class="fab fa-whatsapp"></i>
+        </a>
+        <a href="https://t.me/Neuralink" class="floating-btn telegram" target="_blank">
+            <i class="fab fa-telegram"></i>
+        </a>
+    </div>
+
+    <!-- Bottom Navigation -->
+    <nav class="bottom-nav">
+        <div class="bottom-nav-item active" data-page="home">
+            <i class="fas fa-home bottom-nav-icon"></i>
+            <span>Home</span>
+        </div>
+        <div class="bottom-nav-item" data-page="transaction">
+            <i class="fas fa-exchange-alt bottom-nav-icon"></i>
+            <span>Transaction</span>
+        </div>
+        <div class="bottom-nav-item" data-page="my-team">
+            <i class="fas fa-users bottom-nav-icon"></i>
+            <span>My Team</span>
+        </div>
+        <div class="bottom-nav-item" data-page="help">
+            <i class="fas fa-question-circle bottom-nav-icon"></i>
+            <span>Help</span>
+        </div>
+        <div class="bottom-nav-item" data-page="mine">
+            <i class="fas fa-user bottom-nav-icon"></i>
+            <span>Mine</span>
+        </div>
+    </nav>
+
+    <script>
+        // User data from backend (simulated)
+        const userData = {
+            id: 'PW72849163',
+            email: 'neuralink.admin@gmail.com',
+            firstName: 'Neura',
+            lastName: 'Link',
+            balance: 1250.50,
+            level: 'Gold'
+        };
+
+        // Chart instance
+        let priceChart;
+
+        // Navigation and Feature Handlers
+        document.addEventListener('DOMContentLoaded', function() {
+            // Initialize user profile
+            initializeUserProfile();
+            
+            // Initialize live chart
+            initializePriceChart();
+            
+            // Navigation items
+            const navItems = document.querySelectorAll('.nav-item, .bottom-nav-item');
+            const featureCards = document.querySelectorAll('.feature-card, .prize-section, .market-item');
+            
+            // Navigation click handlers
+            navItems.forEach(item => {
+                item.addEventListener('click', function() {
+                    const page = this.getAttribute('data-page');
+                    navigateToPage(page);
+                });
+            });
+            
+            // Feature click handlers
+            featureCards.forEach(card => {
+                card.addEventListener('click', function() {
+                    let feature = '';
+                    if (this.getAttribute('data-feature')) {
+                        feature = this.getAttribute('data-feature');
+                    } else if (this.getAttribute('data-market')) {
+                        feature = this.getAttribute('data-market');
+                    } else {
+                        feature = 'prize-wheel';
+                    }
+                    openFeature(feature);
+                });
+            });
+            
+            // Initialize real-time data updates
+            initializeRealTimeData();
+        });
+        
+        // Initialize user profile from backend data
+        function initializeUserProfile() {
+            const avatar = document.getElementById('userAvatar');
+            const email = document.getElementById('userEmail');
+            const userId = document.getElementById('userId');
+            
+            // Set avatar with initials
+            const initials = userData.firstName.charAt(0) + userData.lastName.charAt(0);
+            avatar.textContent = initials;
+            
+            // Set masked email
+            const maskedEmail = maskEmail(userData.email);
+            email.textContent = maskedEmail;
+            
+            // Set user ID
+            userId.textContent = `ID: ${userData.id}`;
+        }
+        
+        // Mask email for privacy
+        function maskEmail(email) {
+            const [localPart, domain] = email.split('@');
+            const maskedLocal = localPart.substring(0, 4) + '****' + localPart.substring(localPart.length - 3);
+            return `${maskedLocal}@${domain}`;
+        }
+        
+        // Initialize live price chart
+        function initializePriceChart() {
+            const ctx = document.getElementById('priceChart').getContext('2d');
+            
+            // Generate sample price data
+            const labels = [];
+            const data = [];
+            let currentPrice = 68421.50;
+            
+            for (let i = 0; i < 24; i++) {
+                labels.push(`${i}:00`);
+                // Simulate price movement
+                currentPrice += (Math.random() - 0.5) * 1000;
+                data.push(currentPrice);
+            }
+            
+            priceChart = new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: labels,
+                    datasets: [{
+                        label: 'BTC/USDT',
+                        data: data,
+                        borderColor: '#F0B90B',
+                        backgroundColor: 'rgba(240, 185, 11, 0.1)',
+                        borderWidth: 2,
+                        fill: true,
+                        tension: 0.4,
+                        pointRadius: 0,
+                        pointHoverRadius: 4
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            display: false
+                        },
+                        tooltip: {
+                            mode: 'index',
+                            intersect: false,
+                            backgroundColor: 'rgba(26, 34, 52, 0.9)',
+                            titleColor: '#94A3B8',
+                            bodyColor: '#FFFFFF',
+                            borderColor: '#2D3748',
+                            borderWidth: 1
+                        }
+                    },
+                    scales: {
+                        x: {
+                            grid: {
+                                color: 'rgba(45, 55, 72, 0.5)',
+                                drawBorder: false
+                            },
+                            ticks: {
+                                color: '#64748B',
+                                maxTicksLimit: 6
+                            }
+                        },
+                        y: {
+                            grid: {
+                                color: 'rgba(45, 55, 72, 0.5)',
+                                drawBorder: false
+                            },
+                            ticks: {
+                                color: '#64748B',
+                                callback: function(value) {
+                                    return '$' + value.toLocaleString();
+                                }
+                            }
+                        }
+                    },
+                    interaction: {
+                        mode: 'nearest',
+                        axis: 'x',
+                        intersect: false
+                    }
+                }
+            });
+        }
+        
+        // Update chart with new data
+        function updateChart() {
+            if (priceChart) {
+                // Remove first data point and add new one
+                priceChart.data.labels.push(`${priceChart.data.labels.length}:00`);
+                priceChart.data.labels.shift();
+                
+                const lastPrice = priceChart.data.datasets[0].data[priceChart.data.datasets[0].data.length - 1];
+                const newPrice = lastPrice + (Math.random() - 0.5) * 800;
+                priceChart.data.datasets[0].data.push(newPrice);
+                priceChart.data.datasets[0].data.shift();
+                
+                priceChart.update('quiet');
+            }
+        }
+        
+        // Navigation function
+        function navigateToPage(page) {
+            // Remove active class from all items
+            document.querySelectorAll('.nav-item, .bottom-nav-item').forEach(item => {
+                item.classList.remove('active');
+            });
+            
+            // Add active class to clicked items
+            document.querySelectorAll(`[data-page="${page}"]`).forEach(item => {
+                item.classList.add('active');
+            });
+            
+            // In production, this would load the page content
+            console.log(`Navigating to: ${page}`);
+            
+            // For demo, we'll just update the URL without reload
+            history.pushState({}, '', `#${page}`);
+            
+            // Show appropriate content based on page
+            showPageContent(page);
+        }
+        
+        // Show page content based on navigation
+        function showPageContent(page) {
+            // In a real app, you would load different content here
+            const marketSection = document.querySelector('.market-section');
+            
+            switch(page) {
+                case 'home':
+                    marketSection.style.display = 'block';
+                    break;
+                case 'transaction':
+                    // Hide market section when on transaction page
+                    marketSection.style.display = 'none';
+                    break;
+                case 'my-team':
+                    marketSection.style.display = 'none';
+                    break;
+                case 'help':
+                    marketSection.style.display = 'none';
+                    break;
+                case 'mine':
+                    marketSection.style.display = 'none';
+                    break;
+            }
+        }
+        
+        // Feature opening function
+        function openFeature(feature) {
+            console.log(`Opening feature: ${feature}`);
+            
+            // In production, this would open the specific feature page/modal
+            switch(feature) {
+                case 'btc-usdt':
+                    window.location.href = 'trade.html?pair=BTCUSDT';
+                    break;
+                case 'wingo':
+                    window.location.href = 'wingo.html';
+                    break;
+                case 'simulate':
+                    window.location.href = 'simulate.html';
+                    break;
+                case 'mining':
+                    window.location.href = 'mine.html';
+                    break;
+                case 'prize-wheel':
+                    window.location.href = 'prize-wheel.html';
+                    break;
+                case 'eth-usdt':
+                    window.location.href = 'trade.html?pair=ETHUSDT';
+                    break;
+                default:
+                    // Default action for other features
+                    break;
+            }
+        }
+        
+        // Real-time data simulation
+        function initializeRealTimeData() {
+            // Simulate real-time price updates
+            setInterval(updateMarketPrices, 3000);
+            
+            // Simulate chart updates
+            setInterval(updateChart, 5000);
+            
+            // Simulate new wins
+            setInterval(addNewWin, 8000);
+        }
+        
+        function updateMarketPrices() {
+            const btcPrice = document.getElementById('btcPrice');
+            const btcChange = document.getElementById('btcChange');
+            const ethPrice = document.getElementById('ethPrice');
+            const ethChange = document.getElementById('ethChange');
+            
+            // Random small fluctuations
+            const btcChangeValue = (Math.random() - 0.5) * 0.8;
+            const ethChangeValue = (Math.random() - 0.5) * 1.2;
+            
+            // Update BTC
+            const currentBtcPrice = parseFloat(btcPrice.textContent.replace(',', ''));
+            const newBtcPrice = currentBtcPrice * (1 + btcChangeValue / 100);
+            btcPrice.textContent = newBtcPrice.toLocaleString('en-US', {maximumFractionDigits: 2});
+            
+            btcChange.innerHTML = `
+                <i class="fas fa-arrow-${btcChangeValue >= 0 ? 'up' : 'down'}"></i>
+                ${Math.abs(btcChangeValue).toFixed(2)}%
+            `;
+            btcChange.className = `market-change ${btcChangeValue >= 0 ? 'change-positive' : 'change-negative'}`;
+            
+            // Update ETH
+            const currentEthPrice = parseFloat(ethPrice.textContent.replace(',', ''));
+            const newEthPrice = currentEthPrice * (1 + ethChangeValue / 100);
+            ethPrice.textContent = newEthPrice.toLocaleString('en-US', {maximumFractionDigits: 2});
+            
+            ethChange.innerHTML = `
+                <i class="fas fa-arrow-${ethChangeValue >= 0 ? 'up' : 'down'}"></i>
+                ${Math.abs(ethChangeValue).toFixed(2)}%
+            `;
+            ethChange.className = `market-change ${ethChangeValue >= 0 ? 'change-positive' : 'change-negative'}`;
+        }
+        
+        function addNewWin() {
+            const wins = [
+                { user: '539****21', amount: '45.7 TRX' },
+                { user: 'new****der', amount: '200 USDT' },
+                { user: 'trader_***', amount: '89.3 TRX' },
+                { user: 'user****56', amount: '150 USDT' },
+                { user: '917*****34', amount: '7.8 TRX' }
+            ];
+            
+            const randomWin = wins[Math.floor(Math.random() * wins.length)];
+            const winsScroll = document.querySelector('.wins-scroll');
+            
+            const newWinItem = document.createElement('div');
+            newWinItem.className = 'win-item';
+            newWinItem.innerHTML = `
+                <div class="win-avatar">
+                    <i class="fas fa-user"></i>
+                </div>
+                <div class="win-content">
+                    <span class="win-user">${randomWin.user}</span> won <span class="win-amount">${randomWin.amount}</span>
+                </div>
+            `;
+            
+            winsScroll.appendChild(newWinItem);
+        }
+    </script>
+</body>
+</html>

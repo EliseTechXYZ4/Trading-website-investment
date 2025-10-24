@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Logout - Neuralink</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #1a73e8;
+            --primary-dark: #0d47a1;
+            --secondary: #00c853;
+            --dark: #121826;
+            --dark-light: #1e293b;
+            --light: #f8fafc;
+            --gray: #94a3b8;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', sans-serif;
+        }
+        
+        body {
+            background-color: var(--dark);
+            color: var(--light);
+            line-height: 1.6;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 20px;
+        }
+        
+        .logout-container {
+            max-width: 500px;
+            width: 100%;
+            padding: 40px;
+            background-color: var(--dark-light);
+            border-radius: 12px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            margin-bottom: 30px;
+        }
+        
+        .logo-icon {
+            color: var(--primary);
+            font-size: 40px;
+        }
+        
+        .logo-text {
+            font-size: 32px;
+            font-weight: 700;
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        
+        .logout-icon {
+            font-size: 80px;
+            color: var(--primary);
+            margin-bottom: 20px;
+        }
+        
+        h1 {
+            font-size: 28px;
+            margin-bottom: 15px;
+        }
+        
+        p {
+            color: var(--gray);
+            margin-bottom: 30px;
+            font-size: 16px;
+        }
+        
+        .progress-bar {
+            height: 6px;
+            background-color: rgba(255, 255, 255, 0.1);
+            border-radius: 3px;
+            margin-bottom: 30px;
+            overflow: hidden;
+        }
+        
+        .progress {
+            height: 100%;
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+            width: 0%;
+            border-radius: 3px;
+            transition: width 0.3s ease;
+        }
+        
+        .btn {
+            padding: 12px 25px;
+            border-radius: 6px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            border: none;
+            font-size: 16px;
+            text-decoration: none;
+            display: inline-block;
+        }
+        
+        .btn-primary {
+            background-color: var(--primary);
+            color: white;
+        }
+        
+        .btn-primary:hover {
+            background-color: var(--primary-dark);
+        }
+        
+        .btn-outline {
+            background-color: transparent;
+            color: var(--light);
+            border: 1px solid var(--gray);
+            margin-left: 10px;
+        }
+        
+        .btn-outline:hover {
+            background-color: rgba(255, 255, 255, 0.1);
+        }
+        
+        .countdown {
+            font-size: 14px;
+            color: var(--gray);
+            margin-top: 15px;
+        }
+    </style>
+</head>
+<body>
+    <div class="logout-container">
+        <div class="logo">
+            <i class="fas fa-brain logo-icon"></i>
+            <div class="logo-text">Neuralink</div>
+        </div>
+        
+        <div class="logout-icon">
+            <i class="fas fa-sign-out-alt"></i>
+        </div>
+        
+        <h1>You're Logging Out</h1>
+        <p>You have been successfully logged out of your Neuralink account. You will be redirected to the home page shortly.</p>
+        
+        <div class="progress-bar">
+            <div class="progress" id="logoutProgress"></div>
+        </div>
+        
+        <div class="countdown" id="countdown">Redirecting in 5 seconds...</div>
+        
+        <div class="action-buttons">
+            <a href="index.html" class="btn btn-primary">Return to Home</a>
+            <a href="login.html" class="btn btn-outline">Login Again</a>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const progressBar = document.getElementById('logoutProgress');
+            const countdownElement = document.getElementById('countdown');
+            let countdown = 5;
+            
+            // Simulate logout process
+            const logoutInterval = setInterval(() => {
+                countdown--;
+                const progress = 100 - (countdown * 20);
+                progressBar.style.width = progress + '%';
+                countdownElement.textContent = `Redirecting in ${countdown} seconds...`;
+                
+                if (countdown <= 0) {
+                    clearInterval(logoutInterval);
+                    // Redirect to home page
+                    window.location.href = 'index.html';
+                }
+            }, 1000);
+            
+            // In a real application, you would also:
+            // 1. Clear authentication tokens from localStorage/sessionStorage
+            // 2. Send a request to the backend to invalidate the session
+            // 3. Clear any user data from the client side
+            
+            // Clear user data from localStorage (example)
+            localStorage.removeItem('authToken');
+            localStorage.removeItem('userData');
+            sessionStorage.clear();
+        });
+    </script>
+</body>
+</html>

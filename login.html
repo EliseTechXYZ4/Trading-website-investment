@@ -1,0 +1,1051 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - PrimeWealth | Professional Crypto Trading</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* OKX Color Scheme & Design System */
+        :root {
+            /* OKX Primary Colors */
+            --okx-primary: #00D2FF;
+            --okx-primary-dark: #00B8E6;
+            --okx-primary-light: #33DBFF;
+            --okx-secondary: #F0B90B;
+            --okx-accent: #00FF88;
+            
+            /* OKX Background Colors */
+            --okx-bg-primary: #0A0E17;
+            --okx-bg-secondary: #131B29;
+            --okx-bg-tertiary: #1E293B;
+            --okx-bg-card: #1A2234;
+            
+            /* OKX Text Colors */
+            --okx-text-primary: #FFFFFF;
+            --okx-text-secondary: #94A3B8;
+            --okx-text-tertiary: #64748B;
+            
+            /* OKX Status Colors */
+            --okx-success: #00FF88;
+            --okx-error: #FF4747;
+            --okx-warning: #FFB800;
+            --okx-info: #00D2FF;
+            
+            /* OKX Border & Shadows */
+            --okx-border: #2D3748;
+            --okx-border-light: #374151;
+            --okx-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+            --okx-glow: 0 0 20px rgba(0, 210, 255, 0.3);
+            
+            /* Spacing */
+            --okx-spacing-xs: 8px;
+            --okx-spacing-sm: 12px;
+            --okx-spacing-md: 16px;
+            --okx-spacing-lg: 24px;
+            --okx-spacing-xl: 32px;
+            
+            /* Border Radius */
+            --okx-radius-sm: 6px;
+            --okx-radius-md: 8px;
+            --okx-radius-lg: 12px;
+            --okx-radius-xl: 16px;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+        }
+
+        body {
+            background: var(--okx-bg-primary);
+            color: var(--okx-text-primary);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: var(--okx-spacing-md);
+            line-height: 1.6;
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        /* Background Animation */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: 
+                radial-gradient(circle at 20% 80%, rgba(0, 210, 255, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 80% 20%, rgba(240, 185, 11, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 40% 40%, rgba(0, 255, 136, 0.05) 0%, transparent 50%);
+            z-index: -1;
+        }
+
+        /* Main Container - OKX Style */
+        .login-container {
+            background: var(--okx-bg-card);
+            border: 1px solid var(--okx-border);
+            border-radius: var(--okx-radius-xl);
+            box-shadow: var(--okx-shadow);
+            width: 100%;
+            max-width: 440px;
+            overflow: hidden;
+            position: relative;
+            backdrop-filter: blur(20px);
+        }
+
+        /* Header Section */
+        .login-header {
+            background: linear-gradient(135deg, var(--okx-bg-secondary) 0%, var(--okx-bg-tertiary) 100%);
+            padding: var(--okx-spacing-xl);
+            text-align: center;
+            position: relative;
+            border-bottom: 1px solid var(--okx-border);
+        }
+
+        .login-header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: linear-gradient(90deg, var(--okx-primary), var(--okx-accent));
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: var(--okx-spacing-sm);
+            margin-bottom: var(--okx-spacing-md);
+        }
+
+        .logo-icon {
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(135deg, var(--okx-primary), var(--okx-accent));
+            border-radius: var(--okx-radius-md);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+            color: var(--okx-bg-primary);
+        }
+
+        .logo-text {
+            font-size: 28px;
+            font-weight: 700;
+            background: linear-gradient(135deg, var(--okx-text-primary), var(--okx-primary-light));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .login-header h1 {
+            font-size: 24px;
+            font-weight: 600;
+            margin-bottom: var(--okx-spacing-xs);
+            color: var(--okx-text-primary);
+        }
+
+        .login-header p {
+            color: var(--okx-text-secondary);
+            font-size: 14px;
+        }
+
+        /* Tabs - OKX Style */
+        .login-tabs {
+            display: flex;
+            background: var(--okx-bg-secondary);
+            border-bottom: 1px solid var(--okx-border);
+        }
+
+        .login-tab {
+            flex: 1;
+            padding: var(--okx-spacing-lg);
+            background: transparent;
+            border: none;
+            color: var(--okx-text-secondary);
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: var(--okx-spacing-xs);
+        }
+
+        .login-tab.active {
+            color: var(--okx-primary);
+            background: var(--okx-bg-card);
+        }
+
+        .login-tab.active::after {
+            content: '';
+            position: absolute;
+            bottom: -1px;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: var(--okx-primary);
+        }
+
+        .login-tab:hover:not(.active) {
+            color: var(--okx-text-primary);
+            background: rgba(255, 255, 255, 0.05);
+        }
+
+        /* Form Styles */
+        .login-form {
+            padding: var(--okx-spacing-xl);
+        }
+
+        .form-content {
+            display: none;
+        }
+
+        .form-content.active {
+            display: block;
+            animation: fadeInUp 0.4s ease-out;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .form-group {
+            margin-bottom: var(--okx-spacing-lg);
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: var(--okx-spacing-sm);
+            color: var(--okx-text-secondary);
+            font-size: 14px;
+            font-weight: 500;
+        }
+
+        .input-group {
+            position: relative;
+        }
+
+        .input-group input {
+            width: 100%;
+            padding: 14px 16px;
+            background: var(--okx-bg-secondary);
+            border: 1px solid var(--okx-border);
+            border-radius: var(--okx-radius-md);
+            color: var(--okx-text-primary);
+            font-size: 14px;
+            transition: all 0.3s ease;
+        }
+
+        .input-group input:focus {
+            outline: none;
+            border-color: var(--okx-primary);
+            box-shadow: 0 0 0 3px rgba(0, 210, 255, 0.1);
+        }
+
+        .input-group input.error {
+            border-color: var(--okx-error);
+        }
+
+        .input-group input.success {
+            border-color: var(--okx-success);
+        }
+
+        .password-toggle {
+            position: absolute;
+            right: 16px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: none;
+            border: none;
+            color: var(--okx-text-tertiary);
+            cursor: pointer;
+            font-size: 16px;
+            transition: color 0.3s ease;
+        }
+
+        .password-toggle:hover {
+            color: var(--okx-primary);
+        }
+
+        .error-message {
+            color: var(--okx-error);
+            font-size: 12px;
+            margin-top: 6px;
+            display: none;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .error-message.show {
+            display: flex;
+        }
+
+        .forgot-password {
+            text-align: right;
+            margin-bottom: var(--okx-spacing-lg);
+        }
+
+        .forgot-password a {
+            color: var(--okx-primary);
+            text-decoration: none;
+            font-size: 14px;
+            transition: color 0.3s ease;
+        }
+
+        .forgot-password a:hover {
+            color: var(--okx-primary-light);
+            text-decoration: underline;
+        }
+
+        /* OKX Style Button */
+        .login-button {
+            width: 100%;
+            padding: 14px;
+            background: linear-gradient(135deg, var(--okx-primary), var(--okx-primary-dark));
+            color: var(--okx-bg-primary);
+            border: none;
+            border-radius: var(--okx-radius-md);
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: var(--okx-spacing-sm);
+        }
+
+        .login-button:hover:not(:disabled) {
+            transform: translateY(-1px);
+            box-shadow: var(--okx-glow);
+        }
+
+        .login-button:active {
+            transform: translateY(0);
+        }
+
+        .login-button:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+        }
+
+        .loading-spinner {
+            display: none;
+            width: 16px;
+            height: 16px;
+            border: 2px solid transparent;
+            border-top: 2px solid currentColor;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        /* Register Link */
+        .register-link {
+            text-align: center;
+            margin-top: var(--okx-spacing-xl);
+            padding-top: var(--okx-spacing-lg);
+            border-top: 1px solid var(--okx-border);
+            color: var(--okx-text-secondary);
+            font-size: 14px;
+        }
+
+        .register-link a {
+            color: var(--okx-primary);
+            text-decoration: none;
+            font-weight: 600;
+            margin-left: 6px;
+        }
+
+        .register-link a:hover {
+            text-decoration: underline;
+        }
+
+        /* Notification */
+        .notification {
+            padding: var(--okx-spacing-md);
+            border-radius: var(--okx-radius-md);
+            margin-bottom: var(--okx-spacing-lg);
+            display: none;
+            align-items: center;
+            gap: var(--okx-spacing-sm);
+            font-size: 14px;
+            animation: slideInDown 0.3s ease-out;
+        }
+
+        @keyframes slideInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .notification.success {
+            background: rgba(0, 255, 136, 0.1);
+            color: var(--okx-success);
+            border: 1px solid var(--okx-success);
+        }
+
+        .notification.error {
+            background: rgba(255, 71, 71, 0.1);
+            color: var(--okx-error);
+            border: 1px solid var(--okx-error);
+        }
+
+        /* Floating Social Bar */
+        .floating-social {
+            position: fixed;
+            right: var(--okx-spacing-lg);
+            top: 50%;
+            transform: translateY(-50%);
+            display: flex;
+            flex-direction: column;
+            gap: var(--okx-spacing-md);
+            z-index: 1000;
+        }
+
+        .social-button {
+            width: 50px;
+            height: 50px;
+            border-radius: var(--okx-radius-lg);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            text-decoration: none;
+            font-size: 20px;
+            transition: all 0.3s ease;
+            box-shadow: var(--okx-shadow);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .social-button::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(255, 255, 255, 0.1);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .social-button:hover::before {
+            opacity: 1;
+        }
+
+        .social-button.whatsapp {
+            background: linear-gradient(135deg, #25D366, #128C7E);
+        }
+
+        .social-button.telegram {
+            background: linear-gradient(135deg, #0088CC, #006699);
+        }
+
+        .social-button:hover {
+            transform: translateY(-2px) scale(1.1);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+        }
+
+        /* Security Badge */
+        .security-badge {
+            background: var(--okx-bg-secondary);
+            border: 1px solid var(--okx-border);
+            border-radius: var(--okx-radius-md);
+            padding: var(--okx-spacing-md);
+            margin-top: var(--okx-spacing-lg);
+            text-align: center;
+        }
+
+        .security-badge i {
+            color: var(--okx-success);
+            margin-right: var(--okx-spacing-xs);
+        }
+
+        .security-badge span {
+            color: var(--okx-text-secondary);
+            font-size: 12px;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .floating-social {
+                right: var(--okx-spacing-md);
+                bottom: var(--okx-spacing-md);
+                top: auto;
+                transform: none;
+                flex-direction: row;
+            }
+            
+            .social-button {
+                width: 44px;
+                height: 44px;
+                font-size: 18px;
+            }
+            
+            .login-container {
+                max-width: 100%;
+                border-radius: var(--okx-radius-lg);
+            }
+            
+            .login-header {
+                padding: var(--okx-spacing-lg);
+            }
+            
+            .login-form {
+                padding: var(--okx-spacing-lg);
+            }
+        }
+
+        /* Focus Styles */
+        button:focus-visible,
+        input:focus-visible {
+            outline: 2px solid var(--okx-primary);
+            outline-offset: 2px;
+        }
+
+        /* Reduced Motion */
+        @media (prefers-reduced-motion: reduce) {
+            * {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Floating Social Media Bar -->
+    <div class="floating-social">
+        <a href="https://wa.me/your-whatsapp-number" class="social-button whatsapp" target="_blank" aria-label="Contact us on WhatsApp">
+            <i class="fab fa-whatsapp"></i>
+        </a>
+        <a href="https://t.me/your-telegram-username" class="social-button telegram" target="_blank" aria-label="Join our Telegram">
+            <i class="fab fa-telegram"></i>
+        </a>
+    </div>
+
+    <!-- Login Container -->
+    <div class="login-container">
+        <div class="login-header">
+            <div class="logo">
+                <div class="logo-icon">
+                    <i class="fas fa-chart-line"></i>
+                </div>
+                <div class="logo-text">PrimeWealth</div>
+            </div>
+            <h1>Welcome Back</h1>
+            <p>Sign in to your professional trading account</p>
+        </div>
+        
+        <div class="login-tabs">
+            <button class="login-tab active" data-tab="email">
+                <i class="fas fa-envelope"></i> Email
+            </button>
+            <button class="login-tab" data-tab="phone">
+                <i class="fas fa-mobile-alt"></i> Phone
+            </button>
+        </div>
+        
+        <div class="login-form">
+            <div class="notification" id="notification">
+                <i class="fas fa-info-circle"></i>
+                <span id="notificationMessage"></span>
+            </div>
+            
+            <!-- Email Login Form -->
+            <div id="email-form" class="form-content active">
+                <div class="form-group">
+                    <label for="email">Email Address</label>
+                    <div class="input-group">
+                        <input type="email" id="email" placeholder="Enter your registered email" required autocomplete="email">
+                    </div>
+                    <div class="error-message" id="emailError">
+                        <i class="fas fa-exclamation-circle"></i> Please enter a valid email address
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label for="password">Password</label>
+                    <div class="input-group">
+                        <input type="password" id="password" placeholder="Enter your password" required autocomplete="current-password">
+                        <button type="button" class="password-toggle" id="togglePassword">
+                            <i class="fas fa-eye"></i>
+                        </button>
+                    </div>
+                    <div class="error-message" id="passwordError">
+                        <i class="fas fa-exclamation-circle"></i> Password is required
+                    </div>
+                </div>
+                
+                <div class="forgot-password">
+                    <a href="reset-password.html">Forgot Password?</a>
+                </div>
+                
+                <button class="login-button" id="emailLoginBtn">
+                    <span>Sign In</span>
+                    <div class="loading-spinner" id="emailSpinner"></div>
+                </button>
+            </div>
+            
+            <!-- Phone Login Form -->
+            <div id="phone-form" class="form-content">
+                <div class="form-group">
+                    <label for="phone">Phone Number</label>
+                    <div class="input-group">
+                        <input type="tel" id="phone" placeholder="Enter your registered phone number" required autocomplete="tel">
+                    </div>
+                    <div class="error-message" id="phoneError">
+                        <i class="fas fa-exclamation-circle"></i> Please enter a valid phone number
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label for="phone-password">Password</label>
+                    <div class="input-group">
+                        <input type="password" id="phone-password" placeholder="Enter your password" required autocomplete="current-password">
+                        <button type="button" class="password-toggle" id="togglePhonePassword">
+                            <i class="fas fa-eye"></i>
+                        </button>
+                    </div>
+                    <div class="error-message" id="phonePasswordError">
+                        <i class="fas fa-exclamation-circle"></i> Password is required
+                    </div>
+                </div>
+                
+                <div class="forgot-password">
+                    <a href="reset-password.html">Forgot Password?</a>
+                </div>
+                
+                <button class="login-button" id="phoneLoginBtn">
+                    <span>Sign In</span>
+                    <div class="loading-spinner" id="phoneSpinner"></div>
+                </button>
+            </div>
+            
+            <div class="register-link">
+                New to PrimeWealth? 
+                <a href="register.html">Create an account</a>
+            </div>
+
+            <div class="security-badge">
+                <i class="fas fa-shield-alt"></i>
+                <span>Bank-level security & encryption</span>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        class LoginManager {
+            constructor() {
+                this.currentTab = 'email';
+                this.init();
+            }
+
+            init() {
+                this.setupEventListeners();
+                this.checkAuthenticationStatus();
+            }
+
+            setupEventListeners() {
+                // Tab switching
+                document.querySelectorAll('.login-tab').forEach(tab => {
+                    tab.addEventListener('click', (e) => this.switchTab(e.target));
+                });
+
+                // Form submissions
+                document.getElementById('emailLoginBtn').addEventListener('click', () => this.handleLogin('email'));
+                document.getElementById('phoneLoginBtn').addEventListener('click', () => this.handleLogin('phone'));
+
+                // Password toggles
+                document.getElementById('togglePassword').addEventListener('click', () => 
+                    this.togglePasswordVisibility('password', 'togglePassword'));
+                document.getElementById('togglePhonePassword').addEventListener('click', () => 
+                    this.togglePasswordVisibility('phone-password', 'togglePhonePassword'));
+
+                // Enter key support
+                document.addEventListener('keypress', (e) => {
+                    if (e.key === 'Enter') {
+                        this.handleLogin(this.currentTab);
+                    }
+                });
+
+                // Input validation
+                document.getElementById('email').addEventListener('blur', () => this.validateEmail());
+                document.getElementById('phone').addEventListener('blur', () => this.validatePhone());
+                document.getElementById('password').addEventListener('blur', () => this.validatePassword('password'));
+                document.getElementById('phone-password').addEventListener('blur', () => this.validatePassword('phone-password'));
+            }
+
+            switchTab(tabElement) {
+                document.querySelectorAll('.login-tab').forEach(t => t.classList.remove('active'));
+                document.querySelectorAll('.form-content').forEach(f => f.classList.remove('active'));
+                
+                tabElement.classList.add('active');
+                this.currentTab = tabElement.getAttribute('data-tab');
+                document.getElementById(`${this.currentTab}-form`).classList.add('active');
+                
+                this.clearErrors();
+                this.hideNotification();
+            }
+
+            togglePasswordVisibility(passwordFieldId, toggleButtonId) {
+                const passwordField = document.getElementById(passwordFieldId);
+                const toggleButton = document.getElementById(toggleButtonId);
+                const icon = toggleButton.querySelector('i');
+                
+                if (passwordField.type === 'password') {
+                    passwordField.type = 'text';
+                    icon.className = 'fas fa-eye-slash';
+                } else {
+                    passwordField.type = 'password';
+                    icon.className = 'fas fa-eye';
+                }
+            }
+
+            validateEmail() {
+                const email = document.getElementById('email').value;
+                const emailError = document.getElementById('emailError');
+                const isValid = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+                
+                this.toggleError('email', emailError, isValid, email);
+                return isValid;
+            }
+
+            validatePhone() {
+                const phone = document.getElementById('phone').value;
+                const phoneError = document.getElementById('phoneError');
+                const cleanedPhone = phone.replace(/\s/g, '');
+                const isValid = /^[\+]?[1-9][\d]{9,14}$/.test(cleanedPhone);
+                
+                this.toggleError('phone', phoneError, isValid, phone);
+                return isValid;
+            }
+
+            validatePassword(fieldId) {
+                const password = document.getElementById(fieldId).value;
+                const passwordError = document.getElementById(fieldId === 'password' ? 'passwordError' : 'phonePasswordError');
+                const isValid = password.length >= 6;
+                
+                this.toggleError(fieldId, passwordError, isValid, password);
+                return isValid;
+            }
+
+            toggleError(fieldId, errorElement, isValid, value) {
+                const input = document.getElementById(fieldId);
+                
+                if (!isValid && value) {
+                    errorElement.classList.add('show');
+                    input.classList.add('error');
+                    input.classList.remove('success');
+                } else {
+                    errorElement.classList.remove('show');
+                    input.classList.remove('error');
+                    if (value) {
+                        input.classList.add('success');
+                    } else {
+                        input.classList.remove('success');
+                    }
+                }
+            }
+
+            clearErrors() {
+                document.querySelectorAll('.error-message').forEach(error => {
+                    error.classList.remove('show');
+                });
+                document.querySelectorAll('input').forEach(input => {
+                    input.classList.remove('error', 'success');
+                });
+            }
+
+            async handleLogin(type) {
+                // Validate inputs
+                let isValid = true;
+                
+                if (type === 'email') {
+                    isValid = this.validateEmail() && this.validatePassword('password');
+                } else {
+                    isValid = this.validatePhone() && this.validatePassword('phone-password');
+                }
+                
+                if (!isValid) {
+                    this.showNotification('Please fix the errors before submitting', 'error');
+                    return;
+                }
+
+                // Get form data
+                const formData = this.getFormData(type);
+                
+                // Show loading state
+                this.setLoadingState(type, true);
+
+                try {
+                    // Backend API call for authentication
+                    const response = await this.makeAPICall('/api/auth/login', formData);
+
+                    if (response.success) {
+                        this.showNotification('Login successful! Redirecting...', 'success');
+                        
+                        // Store user session (in production, this would be handled by backend sessions)
+                        this.createUserSession(response.user, response.tokens);
+                        
+                        // Redirect to dashboard
+                        setTimeout(() => {
+                            window.location.href = '/dashboard';
+                        }, 1500);
+                    } else {
+                        throw new Error(response.message || 'Login failed');
+                    }
+                } catch (error) {
+                    console.error('Login error:', error);
+                    this.showNotification(error.message, 'error');
+                } finally {
+                    this.setLoadingState(type, false);
+                }
+            }
+
+            getFormData(type) {
+                const email = type === 'email' ? document.getElementById('email').value : null;
+                const phone = type === 'phone' ? document.getElementById('phone').value : null;
+                const password = type === 'email' 
+                    ? document.getElementById('password').value 
+                    : document.getElementById('phone-password').value;
+
+                return {
+                    email,
+                    phone,
+                    password,
+                    loginType: type,
+                    deviceInfo: this.getDeviceInfo(),
+                    timestamp: new Date().toISOString()
+                };
+            }
+
+            getDeviceInfo() {
+                return {
+                    userAgent: navigator.userAgent,
+                    platform: navigator.platform,
+                    language: navigator.language,
+                    timezone: Intl.DateTimeFormat().resolvedOptions().timeZone,
+                    screenResolution: `${screen.width}x${screen.height}`
+                };
+            }
+
+            setLoadingState(type, isLoading) {
+                const loginBtn = type === 'email' 
+                    ? document.getElementById('emailLoginBtn') 
+                    : document.getElementById('phoneLoginBtn');
+                const spinner = loginBtn.querySelector('.loading-spinner');
+                const buttonText = loginBtn.querySelector('span');
+
+                if (isLoading) {
+                    buttonText.textContent = 'Signing In...';
+                    spinner.style.display = 'block';
+                    loginBtn.disabled = true;
+                } else {
+                    buttonText.textContent = 'Sign In';
+                    spinner.style.display = 'none';
+                    loginBtn.disabled = false;
+                }
+            }
+
+            showNotification(message, type = 'error') {
+                const notification = document.getElementById('notification');
+                const messageElement = document.getElementById('notificationMessage');
+                const icon = notification.querySelector('i');
+                
+                // Update icon based on type
+                switch (type) {
+                    case 'success':
+                        icon.className = 'fas fa-check-circle';
+                        break;
+                    case 'error':
+                        icon.className = 'fas fa-exclamation-circle';
+                        break;
+                    default:
+                        icon.className = 'fas fa-info-circle';
+                }
+                
+                notification.className = `notification ${type}`;
+                messageElement.textContent = message;
+                notification.style.display = 'flex';
+                
+                // Auto-hide success messages
+                if (type === 'success') {
+                    setTimeout(() => {
+                        this.hideNotification();
+                    }, 5000);
+                }
+            }
+
+            hideNotification() {
+                document.getElementById('notification').style.display = 'none';
+            }
+
+            createUserSession(user, tokens) {
+                // In production, store tokens in HTTP-only cookies
+                // For demo, we'll use sessionStorage (replace with secure methods in production)
+                sessionStorage.setItem('user', JSON.stringify(user));
+                
+                // Set auth token for API calls
+                if (tokens && tokens.accessToken) {
+                    sessionStorage.setItem('authToken', tokens.accessToken);
+                }
+                
+                // Log login activity for security monitoring
+                this.logSecurityEvent('user_login', {
+                    userId: user.id,
+                    timestamp: new Date().toISOString(),
+                    device: this.getDeviceInfo()
+                });
+            }
+
+            async checkAuthenticationStatus() {
+                try {
+                    // Check if user is already logged in
+                    const user = sessionStorage.getItem('user');
+                    const authToken = sessionStorage.getItem('authToken');
+                    
+                    if (user && authToken) {
+                        // Validate token with backend
+                        const response = await this.makeAPICall('/api/auth/validate', { token: authToken });
+                        
+                        if (response.valid) {
+                            // User is authenticated, redirect to dashboard
+                            window.location.href = '/dashboard';
+                        } else {
+                            // Token invalid, clear storage
+                            this.clearUserSession();
+                        }
+                    }
+                } catch (error) {
+                    // Not authenticated or error - stay on login page
+                    console.log('Auth check failed, staying on login page');
+                }
+            }
+
+            clearUserSession() {
+                sessionStorage.removeItem('user');
+                sessionStorage.removeItem('authToken');
+            }
+
+            logSecurityEvent(eventType, data) {
+                // In production, send security events to backend for monitoring
+                console.log(`Security Event: ${eventType}`, data);
+            }
+
+            // Backend API Integration
+            async makeAPICall(endpoint, data) {
+                // In production, this would be actual fetch calls to your backend
+                // For now, we'll simulate API responses
+                
+                const API_BASE_URL = 'https://api.primewealth.com'; // Replace with your backend URL
+                
+                try {
+                    // Simulate network delay
+                    await new Promise(resolve => setTimeout(resolve, 1000 + Math.random() * 500));
+                    
+                    // Simulate different responses based on endpoint and data
+                    if (endpoint === '/api/auth/login') {
+                        return await this.handleLoginRequest(data);
+                    } else if (endpoint === '/api/auth/validate') {
+                        return await this.handleTokenValidation(data);
+                    }
+                    
+                    return { success: false, message: 'Unknown endpoint' };
+                } catch (error) {
+                    throw new Error('Network error: Unable to connect to server');
+                }
+            }
+
+            async handleLoginRequest(data) {
+                // Simulate backend login processing
+                if ((data.email === 'demo@primewealth.com' || data.phone === '+1234567890') && data.password === 'SecurePassword123!') {
+                    return {
+                        success: true,
+                        message: 'Login successful',
+                        user: {
+                            id: 'UID' + Math.random().toString(36).substr(2, 9).toUpperCase(),
+                            email: data.email || 'user@primewealth.com',
+                            phone: data.phone || '+1234567890',
+                            name: 'Demo User',
+                            accountType: 'premium',
+                            kycStatus: 'verified'
+                        },
+                        tokens: {
+                            accessToken: 'mock_access_token_' + Math.random().toString(36).substr(2),
+                            refreshToken: 'mock_refresh_token_' + Math.random().toString(36).substr(2),
+                            expiresIn: 3600
+                        }
+                    };
+                } else {
+                    return {
+                        success: false,
+                        message: 'Invalid email/phone or password'
+                    };
+                }
+            }
+
+            async handleTokenValidation(data) {
+                // Simulate token validation
+                if (data.token && data.token.startsWith('mock_access_token_')) {
+                    return { valid: true, user: { id: 'demo_user_id' } };
+                } else {
+                    return { valid: false };
+                }
+            }
+        }
+
+        // Initialize login manager when page loads
+        document.addEventListener('DOMContentLoaded', () => {
+            new LoginManager();
+        });
+
+        // Security: Clear sensitive data when page is hidden
+        document.addEventListener('visibilitychange', function() {
+            if (document.visibilityState === 'hidden') {
+                // In production, you might want to clear sensitive data
+                // For now, we'll just log the event
+                console.log('Page visibility changed - security check');
+            }
+        });
+
+        // Prevent right-click for security (optional - can be removed)
+        document.addEventListener('contextmenu', function(e) {
+            e.preventDefault();
+            return false;
+        });
+    </script>
+</body>
+</html>
