@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login - PrimeWealth | Professional Crypto Trading</title>
+    <title>Login - Nuelalink | Professional Crypto Trading</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         /* OKX Color Scheme & Design System */
@@ -991,15 +991,15 @@
 
             async handleLoginRequest(data) {
                 // Simulate backend login processing
-                if ((data.email === 'demo@primewealth.com' || data.phone === '+1234567890') && data.password === 'SecurePassword123!') {
+                if ((data.email === '' || data.phone === '') && data.password === '') {
                     return {
                         success: true,
                         message: 'Login successful',
                         user: {
                             id: 'UID' + Math.random().toString(36).substr(2, 9).toUpperCase(),
-                            email: data.email || 'user@primewealth.com',
-                            phone: data.phone || '+1234567890',
-                            name: 'Demo User',
+                            email: data.email || '',
+                            phone: data.phone || '',
+                            name: 'User',
                             accountType: 'premium',
                             kycStatus: 'verified'
                         },
